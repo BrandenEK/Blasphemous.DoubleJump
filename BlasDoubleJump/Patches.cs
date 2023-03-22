@@ -28,24 +28,4 @@ namespace BlasDoubleJump
                 Main.JumpController.GiveBackDoubleJump();
         }
     }
-
-    // Give reference to jump controller
-    [HarmonyPatch(typeof(PlatformCharacterController), "Start")]
-    public class PlatformStart_Patch
-    {
-        public static void Postfix(PlatformCharacterController __instance)
-        {
-            Main.JumpController.PlatformController = __instance;
-        }
-    }
-
-    //[HarmonyPatch(typeof(PlatformCharacterPhysics), "VSpeed", MethodType.Setter)]
-    //public class temp2
-    //{
-    //    public static void Postfix(PlatformCharacterPhysics __instance)
-    //    {
-    //        if (__instance.VSpeed > 0) // and not grounded
-    //            Main.RandomPrayer.UseDoubleJump();
-    //    }
-    //}
 }
