@@ -3,13 +3,18 @@ using Framework.Managers;
 using Framework.Inventory;
 using Framework.Util;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
 using Gameplay.GameControllers.Effects.Player.Dust;
+using Gameplay.UI;
 
 namespace BlasDoubleJump
 {
     public class JumpController : Mod
     {
         public JumpController(string modId, string modName, string modVersion) : base(modId, modName, modVersion) { }
+
+        public static bool InLoadProcess { get; private set; }
 
         public string ItemPersId => "RE402-ITEM";
         public string ItemFlag => "RE402_COLLECTED";
@@ -24,25 +29,16 @@ namespace BlasDoubleJump
 
         protected override void LevelLoaded(string oldLevel, string newLevel)
         {
-            if (itemObject == null)
+            if (newLevel == "MainMenu" && itemObject == null)
             {
-                // Load item object from resources
-                InteractableInvAdd[] items = Resources.FindObjectsOfTypeAll<InteractableInvAdd>();
-                foreach (InteractableInvAdd item in items)
-                {
-                    LogWarning(item.name + ": " + item.item);
-                    if (item.name == "ACT_OrbCollectible")
-                    {
-                        //itemObject = item.gameObject;
-                        Log("Loaded collectible item object");
-                    }
-                }
-                if (itemObject == null) return;
+                UIController.instance.StartCoroutine(LoadCollectibleItem("D02Z02S14_LOGIC"));
+                //LoadCollectibleItem("D02Z02S14_LOGIC");
             }
-            
-            if (newLevel != "D04Z02S01") return;
+
+            if (itemObject == null || newLevel != "D04Z02S01") return;
 
             GameObject newItem = Object.Instantiate(itemObject, GameObject.Find("INTERACTABLES").transform);
+            newItem.SetActive(true);
             newItem.transform.position = new Vector3(233, 29, 0);
             newItem.GetComponent<UniqueId>().uniqueId = ItemPersId;
 
@@ -101,5 +97,83 @@ namespace BlasDoubleJump
             if (AllowDoubleJump)
                 CanDoubleJump = true;
         }
+
+        private IEnumerator LoadCollectibleItem(string sceneName)
+        {
+            InLoadProcess = true;
+            LogWarning("Starting corroutine");
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            while (!asyncLoad.isDone)
+            {
+                yield return null;
+            }
+            //SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+
+            Scene tempScene = SceneManager.GetSceneByName(sceneName);
+            LogWarning("Loaded temp scene");
+
+            foreach (GameObject obj in tempScene.GetRootGameObjects())
+            {
+                if (obj.name == "LOGIC")
+                {
+                    LogWarning("Duplicating item object");
+                    // This is the logic object
+                    CollectibleItem item = obj.GetComponentInChildren<CollectibleItem>();
+                    itemObject = Object.Instantiate(item.gameObject, Main.Transform);
+                    itemObject.SetActive(false);
+                }
+                obj.SetActive(false);
+                Object.DestroyImmediate(obj);
+            }
+            LogWarning("Disabled all");
+
+            yield return null;
+
+            asyncLoad = SceneManager.UnloadSceneAsync(tempScene);
+            while (!asyncLoad.isDone)
+            {
+                yield return null;
+            }
+            LogWarning("unloaded temp scene");
+
+            LogWarning("Scenes: " + SceneManager.sceneCount);
+            InLoadProcess = false;
+        }
+
+        //private IEnumerator LoadCollectibleItem(string sceneName)
+        //{
+        //    InLoadProcess = true;
+        //    LogWarning("Starting corroutine");
+        //    AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        //    while (!asyncLoad.isDone)
+        //    {
+        //        yield return null;
+        //    }
+
+        //    LogWarning("Loaded temp scene");
+
+        //    Scene tempScene = SceneManager.GetSceneByName(sceneName);
+        //    foreach (GameObject obj in tempScene.GetRootGameObjects())
+        //    {
+        //        if (obj.name == "LOGIC")
+        //        {
+        //            LogWarning("Duplicating item object");
+        //            // This is the logic object
+        //            CollectibleItem item = obj.GetComponentInChildren<CollectibleItem>();
+        //            itemObject = Object.Instantiate(item.gameObject, Main.Transform);
+        //            itemObject.SetActive(false);
+        //        }
+        //        obj.SetActive(false);
+        //    }
+        //    LogWarning("Disabled all");
+
+        //    asyncLoad = SceneManager.UnloadSceneAsync(tempScene);
+        //    while (!asyncLoad.isDone)
+        //    {
+        //        yield return null;
+        //    }
+        //    LogWarning("unloaded temp scene");
+        //    InLoadProcess = false;
+        //}
     }
 }

@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using Framework.Managers;
 using CreativeSpore.SmartColliders;
+using Tools.Level.Layout;
 
 namespace BlasDoubleJump
 {
@@ -37,6 +38,16 @@ namespace BlasDoubleJump
         {
             if (__instance.GetPersistenID() == Main.JumpController.ItemPersId)
                 Core.Events.SetFlag(Main.JumpController.ItemFlag, true, false);
+        }
+    }
+    
+    // Prevent certain things when loading temp level
+    [HarmonyPatch(typeof(LevelInitializer), "Awake")]
+    public class LevelInit_Patch
+    {
+        public static bool Prefix()
+        {
+            return !JumpController.InLoadProcess;
         }
     }
 }

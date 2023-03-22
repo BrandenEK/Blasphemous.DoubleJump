@@ -16,6 +16,10 @@ namespace BlasDoubleJump
         private void Start()
         {
             JumpController = new JumpController(MOD_ID, MOD_NAME, MOD_VERSION);
+            if (Transform == null)
+                Transform = this.transform;
         }
+
+        public static UnityEngine.Transform Transform { get; private set; }
     }
 }
