@@ -1,0 +1,4 @@
+lang: en
+itmnam: Purified Hand of the Nun
+itmdes: Description
+itmlor: Lore
