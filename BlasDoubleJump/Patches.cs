@@ -28,4 +28,15 @@ namespace BlasDoubleJump
                 Main.JumpController.GiveBackDoubleJump();
         }
     }
+
+    // Set flag when collecting the item
+    [HarmonyPatch(typeof(CollectibleItem), "InteractionEnd")]
+    public class ItemUse_Patch
+    {
+        public static void Postfix(CollectibleItem __instance)
+        {
+            if (__instance.GetPersistenID() == Main.JumpController.ItemPersId)
+                Core.Events.SetFlag(Main.JumpController.ItemFlag, true, false);
+        }
+    }
 }

@@ -1,5 +1,7 @@
 ﻿using ModdingAPI;
 using Framework.Managers;
+using Framework.Inventory;
+using Framework.Util;
 using UnityEngine;
 using Gameplay.GameControllers.Effects.Player.Dust;
 
@@ -9,10 +11,49 @@ namespace BlasDoubleJump
     {
         public JumpController(string modId, string modName, string modVersion) : base(modId, modName, modVersion) { }
 
+        public string ItemPersId => "RE402-ITEM";
+        public string ItemFlag => "RE402_COLLECTED";
+
+        private GameObject itemObject;
+
         protected override void Initialize()
         {
             RegisterItem(new PurifiedHand().AddEffect<DoubleJumpEffect>());
             DisableFileLogging = true;
+        }
+
+        protected override void LevelLoaded(string oldLevel, string newLevel)
+        {
+            if (itemObject == null)
+            {
+                // Load item object from resources
+                InteractableInvAdd[] items = Resources.FindObjectsOfTypeAll<InteractableInvAdd>();
+                foreach (InteractableInvAdd item in items)
+                {
+                    LogWarning(item.name + ": " + item.item);
+                    if (item.name == "ACT_OrbCollectible")
+                    {
+                        //itemObject = item.gameObject;
+                        Log("Loaded collectible item object");
+                    }
+                }
+                if (itemObject == null) return;
+            }
+            
+            if (newLevel != "D04Z02S01") return;
+
+            GameObject newItem = Object.Instantiate(itemObject, GameObject.Find("INTERACTABLES").transform);
+            newItem.transform.position = new Vector3(233, 29, 0);
+            newItem.GetComponent<UniqueId>().uniqueId = ItemPersId;
+
+            InteractableInvAdd addComponent = newItem.GetComponent<InteractableInvAdd>();
+            addComponent.item = "RE402";
+            addComponent.itemType = InventoryManager.ItemType.Relic;
+
+            CollectibleItem collectComponent = newItem.GetComponent<CollectibleItem>();
+            bool collected = Core.Events.GetFlag(ItemFlag);
+            collectComponent.Consumed = collected;
+            collectComponent.transform.GetChild(2).gameObject.SetActive(!collected);
         }
 
         private bool m_AllowDoubleJump;
@@ -30,6 +71,9 @@ namespace BlasDoubleJump
         {
             if (Core.Logic.Penitent != null && Core.Logic.Penitent.IsStickedOnWall)
                 CanDoubleJump = false;
+
+            if (Input.GetKeyDown(KeyCode.P))
+                LogError(Core.Logic.Penitent.transform.position.ToString());
         }
 
         public bool CanDoubleJump { get; private set; }
