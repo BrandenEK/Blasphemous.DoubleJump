@@ -29,6 +29,7 @@ namespace BlasDoubleJump
 
         protected override void LevelLoaded(string oldLevel, string newLevel)
         {
+            LogWarning("Loaded level");
             if (newLevel == "MainMenu" && itemObject == null)
             {
                 UIController.instance.StartCoroutine(LoadCollectibleItem("D02Z02S14_LOGIC"));
@@ -36,6 +37,24 @@ namespace BlasDoubleJump
             }
 
             if (itemObject == null || newLevel != "D04Z02S01") return;
+
+            // Remove wall climb
+            foreach (GameObject obj in SceneManager.GetSceneByName("D04Z02S01_DECO").GetRootGameObjects())
+            {
+                if (obj.name == "MIDDLEGROUND")
+                {
+                    Transform holder = obj.transform.Find("AfterPlayer/WallClimb");
+                    holder.GetChild(0).gameObject.SetActive(false);
+                    holder.GetChild(1).gameObject.SetActive(false);
+                }
+            }
+            foreach (GameObject obj in SceneManager.GetSceneByName("D04Z02S01_LAYOUT").GetRootGameObjects())
+            {
+                if (obj.name == "NAVIGATION")
+                {
+                    obj.transform.Find("NAV_Wall Climb (1x3) (2)").gameObject.SetActive(false);
+                }
+            }
 
             GameObject newItem = Object.Instantiate(itemObject, GameObject.Find("INTERACTABLES").transform);
             newItem.SetActive(true);
@@ -102,6 +121,10 @@ namespace BlasDoubleJump
         {
             InLoadProcess = true;
             LogWarning("Starting corroutine");
+
+            LogError(Camera.main.transform.position.ToString());
+            LogError(Camera.main.backgroundColor.ToString());
+
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
             while (!asyncLoad.isDone)
             {
@@ -122,6 +145,13 @@ namespace BlasDoubleJump
                     itemObject = Object.Instantiate(item.gameObject, Main.Transform);
                     itemObject.SetActive(false);
                 }
+
+                if (obj.name == "CAMERAS")
+                {
+                    foreach (Component c in obj.transform.GetChild(0).GetComponents<Component>())
+                        LogWarning(c.ToString());
+                }
+
                 obj.SetActive(false);
                 Object.DestroyImmediate(obj);
             }
@@ -136,6 +166,10 @@ namespace BlasDoubleJump
             }
             LogWarning("unloaded temp scene");
 
+            Camera.main.transform.position = new Vector3(0, 0, -10);
+            Camera.main.backgroundColor = new Color(0, 0, 0, 1);
+            LogError(Camera.main.transform.position.ToString());
+            LogError(Camera.main.backgroundColor.ToString());
             LogWarning("Scenes: " + SceneManager.sceneCount);
             InLoadProcess = false;
         }
