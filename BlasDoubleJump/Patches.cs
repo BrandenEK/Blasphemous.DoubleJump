@@ -1,7 +1,6 @@
 ﻿using HarmonyLib;
 using Framework.Managers;
 using CreativeSpore.SmartColliders;
-using Gameplay.GameControllers.Camera;
 using Tools.Level.Layout;
 
 namespace BlasDoubleJump
@@ -48,25 +47,7 @@ namespace BlasDoubleJump
     {
         public static bool Prefix()
         {
-            return !JumpController.InLoadProcess;
-        }
-    }
-    [HarmonyPatch(typeof(CameraNumericBoundaries), "SetBoundariesOnLevelLoad")]
-    public class CameraInit_Patch
-    {
-        public static bool Prefix()
-        {
-            Main.JumpController.LogWarning("level load bound");
-            return !JumpController.InLoadProcess;
-        }
-    }
-    [HarmonyPatch(typeof(CameraNumericBoundaries), "SetBoundaries")]
-    public class CameraInit2_Patch
-    {
-        public static bool Prefix()
-        {
-            Main.JumpController.LogWarning("just bound");
-            return !JumpController.InLoadProcess;
+            return !LevelModder.InLoadProcess;
         }
     }
 }
