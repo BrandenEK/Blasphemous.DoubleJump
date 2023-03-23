@@ -19,6 +19,7 @@ namespace BlasDoubleJump
         public string ItemPersId => "RE402-ITEM";
         public string ItemFlag => "RE402_COLLECTED";
 
+        private bool LoadedObjects { get; set; }
         private GameObject itemObject;
 
         protected override void Initialize()
@@ -29,14 +30,15 @@ namespace BlasDoubleJump
 
         protected override void LevelLoaded(string oldLevel, string newLevel)
         {
-            LogWarning("Loaded level");
-            if (newLevel == "MainMenu" && itemObject == null)
+            // When game is first started, load objects
+            if (newLevel == "MainMenu" && !LoadedObjects)
             {
                 UIController.instance.StartCoroutine(LoadCollectibleItem("D02Z02S14_LOGIC"));
-                //LoadCollectibleItem("D02Z02S14_LOGIC");
+                LoadedObjects = true;
             }
 
-            if (itemObject == null || newLevel != "D04Z02S01") return;
+            // When loading level MoM, remove wall climb and add the collectible item
+            if (newLevel != "D04Z02S01") return;
 
             // Remove wall climb
             foreach (GameObject obj in SceneManager.GetSceneByName("D04Z02S01_DECO").GetRootGameObjects())
@@ -56,19 +58,45 @@ namespace BlasDoubleJump
                 }
             }
 
+            CreateCollectibleItem(ItemPersId, "RE402", new Vector3(233, 29, 0));
+        }
+
+        private void CreateCollectibleItem(string persistentId, string itemId, Vector3 position)
+        {
+            if (itemObject == null) return;
+
             GameObject newItem = Object.Instantiate(itemObject, GameObject.Find("INTERACTABLES").transform);
             newItem.SetActive(true);
-            newItem.transform.position = new Vector3(233, 29, 0);
-            newItem.GetComponent<UniqueId>().uniqueId = ItemPersId;
+            newItem.transform.position = position;
+            newItem.GetComponent<UniqueId>().uniqueId = persistentId;
 
             InteractableInvAdd addComponent = newItem.GetComponent<InteractableInvAdd>();
-            addComponent.item = "RE402";
-            addComponent.itemType = InventoryManager.ItemType.Relic;
+            addComponent.item = itemId;
+            addComponent.itemType = GetItemType(itemId);
 
+            // Hopefully can remove this once the actual pers id is used
             CollectibleItem collectComponent = newItem.GetComponent<CollectibleItem>();
             bool collected = Core.Events.GetFlag(ItemFlag);
             collectComponent.Consumed = collected;
             collectComponent.transform.GetChild(2).gameObject.SetActive(!collected);
+        }
+
+        private InventoryManager.ItemType GetItemType(string id)
+        {
+            if (id != null && id.Length >= 2)
+            {
+                switch (id.Substring(0, 2))
+                {
+                    case "RB": return InventoryManager.ItemType.Bead;
+                    case "PR": return InventoryManager.ItemType.Prayer;
+                    case "RE": return InventoryManager.ItemType.Relic;
+                    case "HE": return InventoryManager.ItemType.Sword;
+                    case "QI": return InventoryManager.ItemType.Quest;
+                    case "CO": return InventoryManager.ItemType.Collectible;
+                }
+            }
+            LogError("Could not determine item type for " + id);
+            return InventoryManager.ItemType.Bead;
         }
 
         private bool m_AllowDoubleJump;
@@ -86,9 +114,6 @@ namespace BlasDoubleJump
         {
             if (Core.Logic.Penitent != null && Core.Logic.Penitent.IsStickedOnWall)
                 CanDoubleJump = false;
-
-            if (Input.GetKeyDown(KeyCode.P))
-                LogError(Core.Logic.Penitent.transform.position.ToString());
         }
 
         public bool CanDoubleJump { get; private set; }
@@ -120,42 +145,27 @@ namespace BlasDoubleJump
         private IEnumerator LoadCollectibleItem(string sceneName)
         {
             InLoadProcess = true;
-            LogWarning("Starting corroutine");
-
-            LogError(Camera.main.transform.position.ToString());
-            LogError(Camera.main.backgroundColor.ToString());
 
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
             while (!asyncLoad.isDone)
             {
                 yield return null;
             }
-            //SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
 
             Scene tempScene = SceneManager.GetSceneByName(sceneName);
-            LogWarning("Loaded temp scene");
-
             foreach (GameObject obj in tempScene.GetRootGameObjects())
             {
                 if (obj.name == "LOGIC")
                 {
-                    LogWarning("Duplicating item object");
                     // This is the logic object
                     CollectibleItem item = obj.GetComponentInChildren<CollectibleItem>();
                     itemObject = Object.Instantiate(item.gameObject, Main.Transform);
                     itemObject.SetActive(false);
                 }
 
-                if (obj.name == "CAMERAS")
-                {
-                    foreach (Component c in obj.transform.GetChild(0).GetComponents<Component>())
-                        LogWarning(c.ToString());
-                }
-
                 obj.SetActive(false);
-                Object.DestroyImmediate(obj);
+                //Object.DestroyImmediate(obj);
             }
-            LogWarning("Disabled all");
 
             yield return null;
 
@@ -164,50 +174,11 @@ namespace BlasDoubleJump
             {
                 yield return null;
             }
-            LogWarning("unloaded temp scene");
 
             Camera.main.transform.position = new Vector3(0, 0, -10);
             Camera.main.backgroundColor = new Color(0, 0, 0, 1);
-            LogError(Camera.main.transform.position.ToString());
-            LogError(Camera.main.backgroundColor.ToString());
-            LogWarning("Scenes: " + SceneManager.sceneCount);
+
             InLoadProcess = false;
         }
-
-        //private IEnumerator LoadCollectibleItem(string sceneName)
-        //{
-        //    InLoadProcess = true;
-        //    LogWarning("Starting corroutine");
-        //    AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-        //    while (!asyncLoad.isDone)
-        //    {
-        //        yield return null;
-        //    }
-
-        //    LogWarning("Loaded temp scene");
-
-        //    Scene tempScene = SceneManager.GetSceneByName(sceneName);
-        //    foreach (GameObject obj in tempScene.GetRootGameObjects())
-        //    {
-        //        if (obj.name == "LOGIC")
-        //        {
-        //            LogWarning("Duplicating item object");
-        //            // This is the logic object
-        //            CollectibleItem item = obj.GetComponentInChildren<CollectibleItem>();
-        //            itemObject = Object.Instantiate(item.gameObject, Main.Transform);
-        //            itemObject.SetActive(false);
-        //        }
-        //        obj.SetActive(false);
-        //    }
-        //    LogWarning("Disabled all");
-
-        //    asyncLoad = SceneManager.UnloadSceneAsync(tempScene);
-        //    while (!asyncLoad.isDone)
-        //    {
-        //        yield return null;
-        //    }
-        //    LogWarning("unloaded temp scene");
-        //    InLoadProcess = false;
-        //}
     }
 }
