@@ -1,0 +1,27 @@
+{
+	"DisabledObjects":
+	{
+		"Decoration":
+		[
+			"MIDDLEGROUND/AfterPlayer/WallClimb/{0}",
+			"MIDDLEGROUND/AfterPlayer/WallClimb/{1}",
+		],
+		"Layout":
+		[
+			"NAVIGATION/NAV_Wall Climb (1x3) (2)"
+		],
+		"Logic":
+		[
+		
+		]
+	},
+	"AddedObjects":
+	[
+		{
+			"Type": "CollectibleItem",
+			"Id": "RE402",
+			"XPos": 233,
+			"YPos": 29
+		}
+	]
+}

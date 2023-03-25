@@ -16,10 +16,6 @@ namespace BlasDoubleJump
         private void Start()
         {
             JumpController = new JumpController(MOD_ID, MOD_NAME, MOD_VERSION);
-            if (Instance == null)
-                Instance = this;
         }
-
-        public static Main Instance { get; private set; }
     }
 }

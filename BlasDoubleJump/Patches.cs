@@ -1,7 +1,6 @@
 ﻿using HarmonyLib;
 using Framework.Managers;
 using CreativeSpore.SmartColliders;
-using Tools.Level.Layout;
 
 namespace BlasDoubleJump
 {
@@ -27,27 +26,6 @@ namespace BlasDoubleJump
         {
             if (__instance.name == "Penitent(Clone)" && (__instance.IsGrounded || __instance.IsClimbing || Core.Logic.Penitent.IsGrabbingCliffLede))
                 Main.JumpController.GiveBackDoubleJump();
-        }
-    }
-
-    // Set flag when collecting the item
-    [HarmonyPatch(typeof(CollectibleItem), "InteractionEnd")]
-    public class ItemUse_Patch
-    {
-        public static void Postfix(CollectibleItem __instance)
-        {
-            if (__instance.GetPersistenID() == Main.JumpController.ItemPersId)
-                Core.Events.SetFlag(Main.JumpController.ItemFlag, true, false);
-        }
-    }
-    
-    // Prevent certain things when loading temp level
-    [HarmonyPatch(typeof(LevelInitializer), "Awake")]
-    public class LevelInit_Patch
-    {
-        public static bool Prefix()
-        {
-            return !LevelModder.InLoadProcess;
         }
     }
 }
