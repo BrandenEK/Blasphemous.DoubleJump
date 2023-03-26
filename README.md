@@ -4,6 +4,7 @@
 
 - [Relic Details](https://github.com/BrandenEK/Blasphemous-Double-Jump#relic-details)
 - [Installation](https://github.com/BrandenEK/Blasphemous-Double-Jump#installation)
+- [Credits](https://github.com/BrandenEK/Blasphemous-Double-Jump#credits)
 - [Translations](https://github.com/BrandenEK/Blasphemous-Double-Jump#translations)
 
 ---
@@ -17,7 +18,6 @@
   - Grabbing a ladder
   - Grabbing a cliff ledge
 - Currently (But maybe not in the future) the double jump is not restored after sword climbing on a wall or after an air impulse
-- Credits to Raider for designing the artwork for the relic
 
 ---
 
@@ -27,6 +27,13 @@
 2. Follow the instructions there on how to install the api
 3. Download the latest release of the mod from the [Releases](https://github.com/BrandenEK/Blasphemous-Double-Jump/releases) page
 4. Extract the contents of the BlasDoubleJump.zip file into the "Modding" folder
+
+---
+
+## Credits
+
+- Text: Rodol J. "ConanCimmerio" Pérez (Ro)
+- Artwork: Raider
 
 ---
 
