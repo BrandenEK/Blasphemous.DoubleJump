@@ -16,9 +16,8 @@
   - Landing on the ground
   - Grabbing a ladder
   - Grabbing a cliff ledge
-  
-<br>
-Currently (But maybe not in the future) the double jump is not restored after sword climbing on a wall or after an air impulse
+- Currently (But maybe not in the future) the double jump is not restored after sword climbing on a wall or after an air impulse
+- Credits to Raider for designing the artwork for the relic
 
 ---
 
