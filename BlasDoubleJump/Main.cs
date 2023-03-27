@@ -9,7 +9,7 @@ namespace BlasDoubleJump
     {
         public const string MOD_ID = "com.damocles.blasphemous.double-jump";
         public const string MOD_NAME = "Double Jump";
-        public const string MOD_VERSION = "1.0.0";
+        public const string MOD_VERSION = "1.0.1";
 
         public static JumpController JumpController { get; private set; }
 

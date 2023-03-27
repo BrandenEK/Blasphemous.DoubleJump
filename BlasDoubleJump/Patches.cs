@@ -10,7 +10,7 @@ namespace BlasDoubleJump
     {
         public static void Postfix(ref bool __result, PlatformCharacterController __instance, PlatformCharacterPhysics ___m_platformPhysics)
         {
-            if (__instance.name == "Penitent(Clone)" && !__result && Main.JumpController.CanDoubleJump)
+            if (__instance.name == "Penitent(Clone)" && !__result && Main.JumpController.CanDoubleJump && Main.JumpController.ButtonStatus == JumpController.ButtonState.Pressed)
             {
                 Main.JumpController.UseDoubleJump(___m_platformPhysics.HSpeed != 0);
                 __result = true;
@@ -24,7 +24,7 @@ namespace BlasDoubleJump
     {
         public static void Postfix(PlatformCharacterController __instance)
         {
-            if (__instance.name == "Penitent(Clone)" && (__instance.IsGrounded || __instance.IsClimbing || Core.Logic.Penitent.IsGrabbingCliffLede))
+            if (__instance.name == "Penitent(Clone)" && (__instance.IsGrounded || __instance.IsClimbing || Core.Logic.Penitent.IsGrabbingCliffLede || Core.Logic.Penitent.IsStickedOnWall))
                 Main.JumpController.GiveBackDoubleJump();
         }
     }
