@@ -17,7 +17,8 @@
   - Landing on the ground
   - Grabbing a ladder
   - Grabbing a cliff ledge
-- Currently (But maybe not in the future) the double jump is not restored after sword climbing on a wall or after an air impulse
+  - Climbing a wall
+  - Performing an air impulse
 
 ---
 
