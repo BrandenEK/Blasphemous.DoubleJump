@@ -41,9 +41,6 @@
     <Reference Include="ModdingAPI">
       <HintPath>..\lib\ModdingAPI.dll</HintPath>
     </Reference>
-    <Reference Include="Rewired_Core">
-      <HintPath>..\lib\Rewired_Core.dll</HintPath>
-    </Reference>
     <Reference Include="Sirenix.Serialization">
       <HintPath>..\lib\Sirenix.Serialization.dll</HintPath>
     </Reference>

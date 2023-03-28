@@ -2,7 +2,6 @@
 using Framework.Managers;
 using UnityEngine;
 using Gameplay.GameControllers.Effects.Player.Dust;
-using Rewired;
 
 namespace BlasDoubleJump
 {
@@ -10,19 +9,6 @@ namespace BlasDoubleJump
     {
         public JumpController(string modId, string modName, string modVersion) : base(modId, modName, modVersion) { }
         public enum ButtonState { Waiting, Released, Pressed }
-
-        private Player input;
-        private Player Input
-        {
-            get
-            {
-                if (input == null)
-                {
-                    input = ReInput.players.GetPlayer(0);
-                }
-                return input;
-            }
-        }
 
         protected override void Initialize()
         {
@@ -56,12 +42,12 @@ namespace BlasDoubleJump
                 // If stuck on wall, wait until you let go of jump to be able to use dbl jump
                 ButtonStatus = ButtonState.Waiting;
             }
-            else if (ButtonStatus == ButtonState.Waiting && !Input.GetButton(6))
+            else if (ButtonStatus == ButtonState.Waiting && !Input.GetButton(InputHandler.ButtonCode.Jump))
             {
                 // If not on wall anymore, once jump button is not held allow the dbl jump
                 ButtonStatus = ButtonState.Released;
             }
-            else if (ButtonStatus == ButtonState.Released && Input.GetButton(6))
+            else if (ButtonStatus == ButtonState.Released && Input.GetButton(InputHandler.ButtonCode.Jump))
             {
                 ButtonStatus = ButtonState.Pressed;
             }
