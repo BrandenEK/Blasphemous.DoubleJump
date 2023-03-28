@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using Framework.Managers;
 using CreativeSpore.SmartColliders;
+using Gameplay.GameControllers.Penitent.Attack;
 
 namespace BlasDoubleJump
 {
@@ -26,6 +27,43 @@ namespace BlasDoubleJump
         {
             if (__instance.name == "Penitent(Clone)" && (__instance.IsGrounded || __instance.IsClimbing || Core.Logic.Penitent.IsGrabbingCliffLede || Core.Logic.Penitent.IsStickedOnWall))
                 Main.JumpController.GiveBackDoubleJump();
+        }
+    }
+
+    // Give jump back after successful air impulse
+    [HarmonyPatch(typeof(PenitentAttack), "HitImpulse")]
+    public class AttackImpulse_Patch
+    {
+        public static void Postfix(PenitentAttack __instance, int ____currentImpulses)
+        {
+            if (!Core.Logic.Penitent.PlatformCharacterController.IsGrounded && ____currentImpulses < Core.Logic.Penitent.Stats.AirImpulses.Final && Main.JumpController.TriggeredHitImpulse)
+                Main.JumpController.GiveBackDoubleJump();
+        }
+    }
+
+    // Calling this function with special status will give back an air impulse
+    [HarmonyPatch(typeof(PenitentAttack), "GetExecutionBonus")]
+    public class AttackSpecial_Patch
+    {
+        public static bool Prefix(ref int ____currentImpulses)
+        {
+            if (Main.JumpController.SpecialStatus)
+            {
+                if (____currentImpulses > 0)
+                    ____currentImpulses--;
+                return false;
+            }
+            return true;
+        }
+    }
+
+    // Store the hit impulse trigger in main class
+    [HarmonyPatch(typeof(PenitentAttack), "HitImpulseTriggered", MethodType.Setter)]
+    public class AttackTrigger_Patch
+    {
+        public static void Postfix(bool value)
+        {
+            Main.JumpController.TriggeredHitImpulse = value;
         }
     }
 }

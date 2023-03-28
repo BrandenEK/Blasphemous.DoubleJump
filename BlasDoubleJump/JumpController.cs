@@ -55,23 +55,22 @@ namespace BlasDoubleJump
             {
                 // If stuck on wall, wait until you let go of jump to be able to use dbl jump
                 ButtonStatus = ButtonState.Waiting;
-                LogWarning("Grabbed wall");
             }
             else if (ButtonStatus == ButtonState.Waiting && !Input.GetButton(6))
             {
                 // If not on wall anymore, once jump button is not held allow the dbl jump
                 ButtonStatus = ButtonState.Released;
-                LogWarning("Released jump");
             }
             else if (ButtonStatus == ButtonState.Released && Input.GetButton(6))
             {
                 ButtonStatus = ButtonState.Pressed;
-                LogWarning("Pressed jump");
             }
         }
 
         public bool CanDoubleJump { get; private set; }
         public ButtonState ButtonStatus { get; private set; }
+        public bool SpecialStatus { get; private set; }
+        public bool TriggeredHitImpulse { get; set; }
 
         public void UseDoubleJump(bool movingHorizontally)
         {
@@ -82,19 +81,26 @@ namespace BlasDoubleJump
             Animator anim = Core.Logic.Penitent.Animator;
             anim.SetBool("IS_JUMPING_OFF", false);
             anim.SetBool("FALLING", false);
-            anim.SetTrigger(movingHorizontally ? "FORWARD_JUMP" : "JUMP");
+            anim.Play(movingHorizontally ? "Jump Forward" : "Jump", 0, 0);
 
             // Sound & dust effects
             Core.Logic.Penitent.Audio.PlayJumpSound();
             StepDustSpawner dust = Core.Logic.Penitent.StepDustSpawner;
             dust.CurrentStepDustSpawn = StepDust.StepDustType.Landing;
             dust.GetStepDust(Core.Logic.Penitent.transform.position);
+
+            // Give back an air impulse
+            SpecialStatus = true;
+            Core.Logic.Penitent.PenitentAttack.GetExecutionBonus();
+            SpecialStatus = false;
         }
 
         public void GiveBackDoubleJump()
         {
             if (AllowDoubleJump)
+            {
                 CanDoubleJump = true;
+            }
         }
     }
 }
