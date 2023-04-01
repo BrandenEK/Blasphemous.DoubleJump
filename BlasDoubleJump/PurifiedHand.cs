@@ -23,7 +23,7 @@ namespace BlasDoubleJump
 
         protected override void LoadImages(out Sprite picture)
         {
-            picture = Main.JumpController.FileUtil.loadDataImages("hand.png", 32, 32, 32, 0, true, out Sprite[] images) ? images[0] : null;
+            picture = Main.JumpController.FileUtil.loadDataImages("hand.png", 30, 30, 32, 0, true, out Sprite[] images) ? images[0] : null;
         }
     }
 
