@@ -1,7 +1,7 @@
-﻿using HarmonyLib;
+﻿using CreativeSpore.SmartColliders;
 using Framework.Managers;
-using CreativeSpore.SmartColliders;
 using Gameplay.GameControllers.Penitent.Attack;
+using HarmonyLib;
 
 namespace BlasDoubleJump
 {

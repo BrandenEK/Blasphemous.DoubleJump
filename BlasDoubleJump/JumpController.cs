@@ -1,7 +1,7 @@
-﻿using ModdingAPI;
-using Framework.Managers;
-using UnityEngine;
+﻿using Framework.Managers;
 using Gameplay.GameControllers.Effects.Player.Dust;
+using ModdingAPI;
+using UnityEngine;
 
 namespace BlasDoubleJump
 {
@@ -19,7 +19,7 @@ namespace BlasDoubleJump
         private bool m_AllowDoubleJump;
         public bool AllowDoubleJump
         {
-            get { return m_AllowDoubleJump; }
+            get => m_AllowDoubleJump;
             set
             {
                 m_AllowDoubleJump = value;
