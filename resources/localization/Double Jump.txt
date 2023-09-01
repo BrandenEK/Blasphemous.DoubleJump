@@ -3,15 +3,20 @@ itmnam: Purified Hand of the Nun
 itmdes: This reliquary, found between the dusty archives of a soldier, contains the hand of a fervorous nun named Isabel. Its metallic covering lets a wooden smell get through its cracks, a sign of the Miracle that engulfes this relic, allowing you to jump in mid air.
 itmlor: Monsignor, I swear over and over to thee there is not such heressy in what I tell, for I witnessed what would seem a truly passionate moment, and such fervour that she started rising from the ground and stood in the air for what seemed like hours. In the middle of it all she grasped her rossary so tightly that one of its beads splintered into her hand, but she did not react. Some days went by and she fell very sick to some fever, her health declined greatly and her skin turned almost rotten. But her hand the bead splintered into remained as healthy-looking as always. In her last days, her hand started to get a wooden aspect and texture, and the smell that came from it was far from that of decomposition. The mother abbess requested her hand to be severed in an attempt to preserve her memory and as a reminder of how the Miracle can act on us. For such was its whim.
 
-lang: zh
-itmnam: 修女的圣净手
-itmdes: 这圣物埋藏在积灰的士兵档案中，其中保存着狂热修女伊莎贝尔的左手，铁匣裂隙中的一丝木香便是奇迹的吻痕。持有此物者能在空中跳跃一次。
-itmlor: “阁下，我向你屡屡发誓，我之所言皆为真相，并无半点异端，因为这绝诚的时刻是我亲眼所见：她在极大的热诚中腾空而起，悬浮了数个时辰。这期间她紧紧握住她的念珠，她甚至并未发觉其中一颗珠子爆裂开来，融入了她的手中。不日她便病入膏肓，肉身急速腐坏，但那只融入了念珠的手却仍白净如初。在她的临终之日里，那只手已化作上好的红木，散发的幽香也与腐败的肉身格格不入。修道院长下令将这只手封存起来，以此铭记她那赤诚的记忆与与苦痛奇迹的无常。”
-
 lang: es
 itmnam: Mano Purificada de la Monja
 itmdes: Este relicario hallado en los polvorientos archivos de un soldado contiene la mano de una monja fervorosa llamada Isabel. La cubierta metálica deja que un olor a madera salga por sus grietas, una señal del Milagro que envuelve esta reliquia y te permite saltar en el aire.
 itmlor: "Monseñor, os juro y perjuro que no es tal herejía lo que os cuento, pues presencié lo que parecía un momento de verdadera pasión, y tal fervor fue que empezó a elevarse del suelo y flotó en el aire lo que parecieron horas. Y en esto que se aferró con tanta fuerza a su rosario que astillósele una de sus cuentas en la mano, mas no se inmutó. Pasaron unos días y enfermó por unas fiebres, su salud decayó y su piel parecía estar casi podrida. Pero la mano en la que se le astilló la cuenta siguió tan sana como siempre. En sus últimos días, su mano comenzó a adquirir el aspecto y el tacto de la madera, y el olor que emanaba de ella distaba mucho del de la putrefacción. Pidió la madre abadesa que le fuera cercenada esa mano en un intento de preservar su recuerdo y como recordatorio de cómo el Milagro puede obrar en nosotros. Pues tal es su voluntad".
+
+lang: de
+itmnam: Gereinigte Hand der Nonne
+itmdes: Diese Reliquie, die zwischen den staubigen Archiven eines Soldaten gefunden wurde, enthält die Hand einer inbrünstigen Nonne namens Isabel. Die metallische Hülle lässt einen hölzernen Geruch durch die Ritzen dringen, ein Zeichen des Wunders, das diese Reliquie umgibt und das es dir ermöglicht, in der Luft zu springen.
+itmlor: Monsignore, ich schwöre dir, dass das, was ich erzähle, nicht wahr ist, denn ich war Zeuge eines wahrhaft leidenschaftlichen Moments und einer solchen Inbrunst, dass sie sich vom Boden erhob und stundenlang in der Luft zu stehen schien. Mittendrin hielt sie ihren Rosenkranz so fest umklammert, dass eine der Perlen in ihrer Hand zersplitterte, aber sie reagierte nicht. Einige Tage vergingen, und sie erkrankte schwer an Fieber, ihr Gesundheitszustand verschlechterte sich stark, und ihre Haut wurde fast faulig. Aber ihre Hand, in die die Perle gesplittert war, sah so gesund aus wie immer. In ihren letzten Tagen begann ihre Hand, ein hölzernes Aussehen und eine hölzerne Textur anzunehmen, und der Geruch, der von ihr ausging, war weit entfernt von dem der Verwesung. Die Mutter Äbtissin bat darum, dass ihre Hand abgetrennt wird, um ihr Andenken zu bewahren und um sie daran zu erinnern, wie das Wunder auf uns wirken kann. Denn das war seine Laune.
+
+lang: zh
+itmnam: 修女的圣净手
+itmdes: 这圣物埋藏在积灰的士兵档案中，其中保存着狂热修女伊莎贝尔的左手，铁匣裂隙中的一丝木香便是奇迹的吻痕。持有此物者能在空中跳跃一次。
+itmlor: “阁下，我向你屡屡发誓，我之所言皆为真相，并无半点异端，因为这绝诚的时刻是我亲眼所见：她在极大的热诚中腾空而起，悬浮了数个时辰。这期间她紧紧握住她的念珠，她甚至并未发觉其中一颗珠子爆裂开来，融入了她的手中。不日她便病入膏肓，肉身急速腐坏，但那只融入了念珠的手却仍白净如初。在她的临终之日里，那只手已化作上好的红木，散发的幽香也与腐败的肉身格格不入。修道院长下令将这只手封存起来，以此铭记她那赤诚的记忆与与苦痛奇迹的无常。”
 
 lang: fr
 itmnam: Main pure de la None
