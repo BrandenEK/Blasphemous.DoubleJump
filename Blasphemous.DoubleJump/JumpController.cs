@@ -83,6 +83,11 @@ public class JumpController : BlasMod
         AllowDoubleJump = false;
     }
 
+    protected override void OnInitialize()
+    {
+        LocalizationHandler.RegisterDefaultLanguage("en");
+    }
+
     protected override void OnRegisterServices(ModServiceProvider provider)
     {
         provider.RegisterItem(new PurifiedHand().AddEffect(new DoubleJumpEffect()));
