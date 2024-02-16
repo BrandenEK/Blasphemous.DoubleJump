@@ -1,6 +1,6 @@
-﻿using Blasphemous.ModdingAPI;
+﻿using Blasphemous.Framework.Items;
+using Blasphemous.ModdingAPI;
 using Blasphemous.ModdingAPI.Input;
-using Blasphemous.ModdingAPI.Items;
 using Framework.Managers;
 using Gameplay.GameControllers.Effects.Player.Dust;
 using UnityEngine;

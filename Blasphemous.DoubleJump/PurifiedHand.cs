@@ -1,4 +1,4 @@
-﻿using Blasphemous.ModdingAPI.Items;
+﻿using Blasphemous.Framework.Items;
 using UnityEngine;
 
 namespace Blasphemous.DoubleJump;
@@ -13,6 +13,9 @@ public class PurifiedHand : ModRelic
 
     protected override string Lore => Main.JumpController.LocalizationHandler.Localize("djlore");
 
+    protected override Sprite Picture => 
+        Main.JumpController.FileHandler.LoadDataAsSprite("hand.png", out Sprite p) ? p : null;
+
     protected override bool CarryOnStart => false;
 
     protected override bool PreserveInNGPlus => true;
@@ -20,11 +23,6 @@ public class PurifiedHand : ModRelic
     protected override bool AddToPercentCompletion => false;
 
     protected override bool AddInventorySlot => true;
-
-    protected override void LoadImages(out Sprite picture)
-    {
-        Main.JumpController.FileHandler.LoadDataAsSprite("hand.png", out picture);
-    }
 }
 
 public class DoubleJumpEffect : ModItemEffectOnEquip
