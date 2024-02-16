@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Blasphemous.DoubleJump;
 
-public class PurifiedHand : ModRelic
+internal class PurifiedHand : ModRelic
 {
     protected override string Id => "RE402";
 
@@ -25,7 +25,7 @@ public class PurifiedHand : ModRelic
     protected override bool AddInventorySlot => true;
 }
 
-public class DoubleJumpEffect : ModItemEffectOnEquip
+internal class DoubleJumpEffect : ModItemEffectOnEquip
 {
     protected override void ApplyEffect()
     {

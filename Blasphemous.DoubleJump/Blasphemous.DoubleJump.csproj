@@ -13,19 +13,16 @@
 
     <TargetName>BlasDoubleJump</TargetName>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>bin\Release\$(TargetName).xml</DocumentationFile>
     <RepositoryUrl>https://github.com/BrandenEK/Blasphemous.DoubleJump</RepositoryUrl>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blasphemous.Framework.Items" Version="0.1.0" />
     <PackageReference Include="Blasphemous.ModdingAPI" Version="2.1.0" />
     <PackageReference Include="Blasphemous.ModdingReferences" Version="4.0.67" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="ItemFramework">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Blasphemous\Modding\plugins\ItemFramework.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <Target Name="Development" AfterTargets="PostBuildEvent">

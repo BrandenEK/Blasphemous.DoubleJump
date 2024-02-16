@@ -7,12 +7,15 @@ using UnityEngine;
 
 namespace Blasphemous.DoubleJump;
 
+/// <summary>
+/// Handles double jump mechanics
+/// </summary>
 public class JumpController : BlasMod
 {
-    public JumpController() : base(ModInfo.MOD_ID, ModInfo.MOD_NAME, ModInfo.MOD_AUTHOR, ModInfo.MOD_VERSION) { }
+    internal JumpController() : base(ModInfo.MOD_ID, ModInfo.MOD_NAME, ModInfo.MOD_AUTHOR, ModInfo.MOD_VERSION) { }
 
     private bool m_AllowDoubleJump;
-    public bool AllowDoubleJump
+    internal bool AllowDoubleJump
     {
         get => m_AllowDoubleJump;
         set
@@ -22,10 +25,13 @@ public class JumpController : BlasMod
         }
     }
 
-    public ButtonState ButtonStatus { get; private set; }
-    public bool CanDoubleJump { get; private set; }
-    public bool TriggeredHitImpulse { get; set; }
+    internal ButtonState ButtonStatus { get; private set; }
+    internal bool CanDoubleJump { get; private set; }
+    internal bool TriggeredHitImpulse { get; set; }
 
+    /// <summary>
+    /// Forces the jump animation and removes the dj flag
+    /// </summary>
     public void UseDoubleJump(bool movingHorizontally)
     {
         Log("Using double jump!");
@@ -49,6 +55,9 @@ public class JumpController : BlasMod
         AttackSpecial_Patch.ImpulseFlag = false;
     }
 
+    /// <summary>
+    /// Sets the dj flag
+    /// </summary>
     public void GiveBackDoubleJump()
     {
         if (AllowDoubleJump)
@@ -57,6 +66,9 @@ public class JumpController : BlasMod
         }
     }
 
+    /// <summary>
+    /// Recalculate the button status
+    /// </summary>
     protected override void OnUpdate()
     {
         if (Core.Logic.Penitent == null)
@@ -78,20 +90,29 @@ public class JumpController : BlasMod
         }
     }
 
+    /// <summary>
+    /// When exiting game, remove the dj flag
+    /// </summary>
     protected override void OnExitGame()
     {
         AllowDoubleJump = false;
     }
 
+    /// <summary>
+    /// Register handlers
+    /// </summary>
     protected override void OnInitialize()
     {
         LocalizationHandler.RegisterDefaultLanguage("en");
     }
 
+    /// <summary>
+    /// Register dj relic
+    /// </summary>
     protected override void OnRegisterServices(ModServiceProvider provider)
     {
         provider.RegisterItem(new PurifiedHand().AddEffect(new DoubleJumpEffect()));
     }
 
-    public enum ButtonState { Waiting, Released, Pressed }
+    internal enum ButtonState { Waiting, Released, Pressed }
 }
