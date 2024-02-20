@@ -1,10 +1,6 @@
 # Blasphemous Double Jump
 
-<div>
-  <img src="https://img.shields.io/github/v/release/BrandenEK/Blasphemous.DoubleJump?style=for-the-badge">
-  <img src="https://img.shields.io/github/last-commit/BrandenEK/Blasphemous.DoubleJump?color=important&style=for-the-badge">
-  <img src="https://img.shields.io/github/downloads/BrandenEK/Blasphemous.DoubleJump/total?color=success&style=for-the-badge">
-</div>
+<img src="https://img.shields.io/github/downloads/BrandenEK/Blasphemous.DoubleJump/total?color=6495ED&style=for-the-badge">
 
 ---
 
