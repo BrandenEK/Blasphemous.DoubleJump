@@ -6,7 +6,7 @@ using HarmonyLib;
 namespace Blasphemous.DoubleJump;
 
 // Use the double jump when pressing jump and unable to normally
-[HarmonyPatch(typeof(PlatformCharacterController), "CanGhostJump", MethodType.Getter)]
+[HarmonyPatch(typeof(PlatformCharacterController), nameof(PlatformCharacterController.CanGhostJump), MethodType.Getter)]
 class PlatformJump_Patch
 {
     public static void Postfix(ref bool __result, PlatformCharacterController __instance, PlatformCharacterPhysics ___m_platformPhysics)
@@ -20,7 +20,7 @@ class PlatformJump_Patch
 }
 
 // Allow double jump again when standing on ground
-[HarmonyPatch(typeof(PlatformCharacterController), "Update")]
+[HarmonyPatch(typeof(PlatformCharacterController), nameof(PlatformCharacterController.Update))]
 class PlatformStanding_Patch
 {
     public static void Postfix(PlatformCharacterController __instance)
@@ -31,7 +31,7 @@ class PlatformStanding_Patch
 }
 
 // Give jump back after successful air impulse
-[HarmonyPatch(typeof(PenitentAttack), "HitImpulse")]
+[HarmonyPatch(typeof(PenitentAttack), nameof(PenitentAttack.HitImpulse))]
 class AttackImpulse_Patch
 {
     public static void Postfix(PenitentAttack __instance, int ____currentImpulses)
@@ -42,7 +42,7 @@ class AttackImpulse_Patch
 }
 
 // Calling this function with special status will give back an air impulse
-[HarmonyPatch(typeof(PenitentAttack), "GetExecutionBonus")]
+[HarmonyPatch(typeof(PenitentAttack), nameof(PenitentAttack.GetExecutionBonus))]
 class AttackSpecial_Patch
 {
     public static bool Prefix(ref int ____currentImpulses)
@@ -60,7 +60,7 @@ class AttackSpecial_Patch
 }
 
 // Store the hit impulse trigger in main class
-[HarmonyPatch(typeof(PenitentAttack), "HitImpulseTriggered", MethodType.Setter)]
+[HarmonyPatch(typeof(PenitentAttack), nameof(PenitentAttack.HitImpulseTriggered), MethodType.Setter)]
 class AttackTrigger_Patch
 {
     public static void Postfix(bool value)
