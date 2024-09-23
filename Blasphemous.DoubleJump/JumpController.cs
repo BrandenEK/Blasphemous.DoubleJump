@@ -34,7 +34,7 @@ public class JumpController : BlasMod
     /// </summary>
     public void UseDoubleJump(bool movingHorizontally)
     {
-        Log("Using double jump!");
+        ModLog.Info("Using double jump!");
         CanDoubleJump = false;
 
         // Handle animations
