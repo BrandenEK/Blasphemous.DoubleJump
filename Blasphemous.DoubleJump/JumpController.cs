@@ -91,7 +91,23 @@ public class JumpController : BlasMod
     }
 
     /// <summary>
-    /// When exiting game, remove the dj flag
+    /// When changing games, remove the dj flag
+    /// </summary>
+    protected override void OnNewGame()
+    {
+        AllowDoubleJump = false;
+    }
+
+    /// <summary>
+    /// When changing games, remove the dj flag
+    /// </summary>
+    protected override void OnLoadGame()
+    {
+        AllowDoubleJump = false;
+    }
+
+    /// <summary>
+    /// When changing games, remove the dj flag
     /// </summary>
     protected override void OnExitGame()
     {
